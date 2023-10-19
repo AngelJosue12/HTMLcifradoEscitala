@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cifrado de Escítala Automático</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 1110;
+            padding: 120;
+            background-color: #f4f4f4;
+            align-content: center;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        label, button {
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        #mensaje, #mensaje2,  #resultado, #resultado2 {
+            width: 80%;
+            margin: 10px auto;
+            padding: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #008CBA;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #005f7f;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <h1>Cifrado de Escítala</h1>
+    <label for="mensaje">Mensaje: </label>
+    <input type="text" id="mensaje" placeholder="Introduce el mensaje">
+    <br>
+    <button onclick="cifrar()">Cifrar</button>
+    <label for="resultado">Resultado: </label>
+    <textarea id="resultado" rows="4" cols="50" readonly></textarea>
+    <label for="mensaje">Mensaje Encriptado: </label>
+    <input type="text" id="mensaje2" placeholder="Introduce el mensaje encriptado">
+    <br>
+    <button onclick="descifrar()">Descifrar</button>
+    <br>
+    <label for="resultado">Resultado: </label>
+    <textarea id="resultado2" rows="4" cols="50" readonly></textarea>
+
+    <script>
+        function cifrar() {
+            const mensaje = document.getElementById("mensaje").value;
+            const mensajeLimpio = mensaje.replace(/\s/g, ''); // Eliminar espacios
+            const longitudMensaje = mensajeLimpio.length;
+            const lados = Math.ceil(Math.sqrt(longitudMensaje));
+            const vueltas = Math.ceil(longitudMensaje / lados);
+
+            let resultado = '';
+
+            for (let i = 0; i < lados; i++) {
+                for (let j = i; j < mensajeLimpio.length; j += lados) {
+                    resultado += mensajeLimpio[j];
+                }
+            }
+
+            document.getElementById("resultado").value = resultado;
+        }
+
+        function descifrar() {
+            const mensaje = document.getElementById("mensaje2").value;
+            const mensajeLimpio = mensaje.replace(/\s/g, ''); // Eliminar espacios
+            const longitudMensaje = mensajeLimpio.length;
+            const lados = Math.ceil(Math.sqrt(longitudMensaje));
+            const vueltas = Math.ceil(longitudMensaje / lados);
+
+            let resultado = Array(longitudMensaje).fill('');
+
+            let index = 0;
+            for (let i = 0; i < lados; i++) {
+                for (let j = i; j < mensajeLimpio.length; j += lados) {
+                    resultado[j] = mensajeLimpio[index];
+                    index++;
+                }
+            }
+
+            document.getElementById("resultado2").value = resultado.join('');
+        }
+    </script>
+    </center>
+</body>
+</html>
